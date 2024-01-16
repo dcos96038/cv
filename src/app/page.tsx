@@ -1,5 +1,6 @@
 import { CommandMenu } from "@/components/command-menu";
 import { ExperienceCard } from "@/components/experience-card";
+import { SwitchLanguageButton } from "@/components/language-button";
 import { Section } from "@/components/section";
 import { StudyCard } from "@/components/study-card";
 import { Badge } from "@/components/ui/badge";
@@ -13,16 +14,18 @@ export const metadata: Metadata = {
   description: `${RESUME_DATA.en.summary}`,
 };
 
-export default function Home({ params }: { params: { language: string } }) {
-  const { language } = params;
+export default function Home({ searchParams }: { searchParams: { language: string } }) {
+  const search = searchParams;
 
-  const DATA = RESUME_DATA[language as keyof typeof RESUME_DATA];
+  const language = search.language ?? "en";
 
-  if (!DATA) throw new Error("Language not found");
+  if (language !== "en" && language !== "es") throw new Error("Language not found");
+
+  const DATA = RESUME_DATA[language as "en" | "es"];
 
   return (
-    <main className="mx-auto max-w-5xl py-20 print:py-10 flex flex-col gap-10 overflow-auto print:overflow-visible relative h-full px-14">
-      <div className="flex gap-8 items-center">
+    <main className="mx-auto max-w-5xl py-10 sm:py-20 print:py-10 flex flex-col gap-10 overflow-auto print:overflow-visible relative h-full px-8 sm:px-14">
+      <div className="flex gap-8 sm:items-center relative sm:flex-row flex-col">
         <div className="bg-gray-500 w-32 h-32 rounded-lg"></div>
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-semibold">{DATA.name}</h1>
@@ -52,9 +55,10 @@ export default function Home({ params }: { params: { language: string } }) {
               </a>
           </div>
         </div>
+        <SwitchLanguageButton />
       </div>
       <Section title={DATA.about.title}>
-        <p className="text-gray-700 text-sm">{DATA.about.content}</p>
+        <p className="text-gray-700 text-xs sm:text-sm">{DATA.about.content}</p>
       </Section>
       <Section title={DATA.work_experience.title}>
         {DATA.work_experience.items.map((experience, index) => {
@@ -70,7 +74,7 @@ export default function Home({ params }: { params: { language: string } }) {
         })}
       </Section>
       <Section title={DATA.skills.title}>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {DATA.skills.items.map((skill, index) => {
             return (
               <Badge key={`${skill}-${index}`} variant="outline">
@@ -92,7 +96,7 @@ export default function Home({ params }: { params: { language: string } }) {
           );
         })}
       </Section>
-      <CommandMenu language={language as "en" | "es"} />
+      <div className="sm:block hidden"><CommandMenu language={language as "en" | "es"} /></div>
     </main>
   );
 }

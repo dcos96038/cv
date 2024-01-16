@@ -15,10 +15,10 @@ export const StudyCard: React.FC<StudyCardProps> = ({
     <div className="flex flex-col gap-2 py-2">
       <div className="flex flex-col">
         <div className="flex justify-between items-center">
-          <h3 className="font-semibold text-lg">{institution}</h3>
-          <Badge variant="outline">{period}</Badge>
+          <h3 className="font-semibold sm:text-lg line-clamp-1">{institution}</h3>
+          <Badge className="text-[10px] px-1 sm:text-xs sm:px-2" variant="outline">{period}</Badge>
         </div>
-        <span className="text-sm text-gray-600">{description}</span>
+        <span className="sm:text-sm text-xs text-gray-600">{description}</span>
       </div>
     </div>
   );
