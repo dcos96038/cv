@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { RESUME_DATA } from "@/data/resume-data";
 import { icons } from "@/data/socials";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: `${RESUME_DATA.en.name} | Curriculum Vitae`,
@@ -26,7 +27,7 @@ export default function Home({ searchParams }: { searchParams: { language: strin
   return (
     <main className="mx-auto max-w-5xl py-10 sm:py-20 print:py-10 flex flex-col gap-10 overflow-auto print:overflow-visible relative h-full px-8 sm:px-14">
       <div className="flex gap-8 sm:items-center relative sm:flex-row flex-col">
-        <div className="bg-gray-500 w-32 h-32 rounded-lg"></div>
+        <Image src={'/profile-picture.jpg'} alt="Diego Coscolla Profile picture" width={128} height={128} className="rounded-md shadow-md" />
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-semibold">{DATA.name}</h1>
           <div className="flex text-sm gap-1 flex-col text-gray-700">

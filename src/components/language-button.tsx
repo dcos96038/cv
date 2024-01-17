@@ -22,5 +22,5 @@ export const SwitchLanguageButton = () => {
   }
 
 
-  return <Button onClick={handleLanguageChange} variant={"outline"} className="absolute right-0 top-0">{language === "en" ? "ES" : "EN"}</Button>;
+  return <Button onClick={handleLanguageChange} variant={"outline"} className="absolute right-0 top-0 print:hidden">{language === "en" ? "ES" : "EN"}</Button>;
 };
