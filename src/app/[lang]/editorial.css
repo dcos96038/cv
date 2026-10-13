@@ -26,3 +26,5 @@
 .ki{padding:9px 10px;border-radius:6px;cursor:pointer}.ki:hover,.ki.sel{background:#efe6d4}
 @media(max-width:600px){.ed .job{grid-template-columns:1fr;gap:4px}.ed main{padding:40px 22px}}
 @media print{#k,.np{display:none!important}.ed{background:#fff;font-size:11pt}.ed main{padding:0;max-width:none}.ed h1{margin-top:12px;font-size:40pt}.ed h2{margin:22px 0 8px}.ed .job{break-inside:avoid}.ed .print-only{display:block}}
+/* Command palette is desktop-only (>= Tailwind md); mobile uses the visible link row + language switch. */
+@media(max-width:767px){.ed .top .kb{display:none}}
