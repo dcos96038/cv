@@ -1,5 +1,5 @@
 import { TopActions } from "@/components/kbar";
-import { RESUME_DATA, SITE_URL } from "@/data/resume-data";
+import { LINKS, RESUME_DATA, SITE_URL } from "@/data/resume-data";
 import type { Metadata } from "next";
 import { LANGS, OG_LOCALE, isLang, langPath, langUrl, type Lang } from "@/lib/i18n";
 
@@ -35,12 +35,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   const language: Lang = isLang(lang) ? lang : "en";
   const D = RESUME_DATA[language];
-  const links = [
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/diego-cos/" },
-    { label: "GitHub", href: "https://github.com/dcos96038" },
-    { label: "X", href: "https://twitter.com/diego_cos96" },
-    { label: "Email", href: "mailto:diegocoscolla@gmail.com" },
-  ];
+  const links = LINKS;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -62,17 +57,17 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
       <main>
         <div className="top">
           <span>{D.location}</span>
-          <TopActions language={language} links={links} />
+          <TopActions language={language} links={links} cv={D.cv} />
         </div>
         <h1>{D.name}</h1>
         <div className="role">{D.position}</div>
         <p className="sum">{D.summary}</p>
-        <div className="soc np">
+        <nav className="soc np" aria-label={language === "es" ? "Enlaces de contacto" : "Contact links"}>
           {links.map((l) => (
             <a key={l.label} href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}>{l.label}</a>
           ))}
           <a href={D.cv.href} download>{D.cv.label}</a>
-        </div>
+        </nav>
         <p className="print-only">diegocoscolla@gmail.com · linkedin.com/in/diego-cos · github.com/dcos96038 · {SITE_URL.replace("https://", "")}</p>
 
         <h2><span>{n(1)}</span>{D.about.title}</h2>

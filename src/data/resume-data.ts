@@ -1,5 +1,13 @@
 export const SITE_URL = "https://cv.diegocoscolla.dev";
 
+/** Profile links shown in the visible link row and in the desktop command palette. */
+export const LINKS = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/diego-cos/" },
+  { label: "GitHub", href: "https://github.com/dcos96038" },
+  { label: "X", href: "https://twitter.com/diego_cos96" },
+  { label: "Email", href: "mailto:diegocoscolla@gmail.com" },
+];
+
 export type Experience = {
   company: string;
   position: string;
