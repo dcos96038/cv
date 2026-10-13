@@ -1,14 +1,6 @@
-import { CommandMenu } from "@/components/command-menu";
-import { ExperienceCard } from "@/components/experience-card";
-import { SwitchLanguageButton } from "@/components/language-button";
-import { Section } from "@/components/section";
-import { StudyCard } from "@/components/study-card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { TopActions } from "@/components/kbar";
 import { RESUME_DATA, SITE_URL } from "@/data/resume-data";
-import { icons } from "@/data/socials";
 import { Metadata } from "next";
-import Image from "next/image";
 
 type Props = { searchParams: Promise<{ language?: string }> };
 
@@ -34,94 +26,64 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 export default async function Home({ searchParams }: Props) {
-  const search = await searchParams;
-
-  const language = search.language ?? "en";
-
-  if (language !== "en" && language !== "es") throw new Error("Language not found");
-
-  const DATA = RESUME_DATA[language as "en" | "es"];
+  const { language: raw } = await searchParams;
+  const language = raw === "es" ? "es" : "en";
+  const D = RESUME_DATA[language];
+  const links = [
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/diego-cos/" },
+    { label: "GitHub", href: "https://github.com/dcos96038" },
+    { label: "X", href: "https://twitter.com/diego_cos96" },
+    { label: "Email", href: "mailto:diegocoscolla@gmail.com" },
+  ];
+  const n = (i: number) => String(i).padStart(2, "0");
 
   return (
-    <main className="mx-auto max-w-5xl py-10 sm:py-20 print:py-10 flex flex-col gap-10 overflow-auto print:overflow-visible relative h-full px-8 sm:px-14">
-      <div className="flex gap-8 sm:items-center relative sm:flex-row flex-col">
-        <Image src={'/profile-picture.jpg'} alt="Diego Coscolla Profile picture" width={128} height={128} className="rounded-md shadow-md" />
-        <div className="flex flex-col gap-4">
-          <div><h1 className="text-3xl font-semibold">{DATA.name}</h1><p className="text-base text-gray-600 font-medium">{DATA.position}</p></div>
-          <div className="flex text-sm gap-1 flex-col text-gray-700">
-            <p className="max-w-lg">{DATA.summary}</p>
-            <p>🌐 {DATA.location}</p>
-          </div>
-          <div className="flex gap-2 print:hidden">
-            {icons.map((icon, index) => {
-              return (
-                <Button
-                  variant={"outline"}
-                  size={"icon"}
-                  key={`${icon.name}-${index}`}
-                  asChild
-                >
-                  <a target="_blank" rel="noopener noreferrer" href={icon.href}>
-                    {icon.component}
-                  </a>
-                </Button>
-              );
-            })}
-          </div>
-          <a href={DATA.cv.href} download className="print:hidden inline-flex w-fit items-center rounded-md border px-3 py-1.5 text-sm font-medium hover:bg-gray-100 transition-colors">⬇ {DATA.cv.label}</a>
-          <div className="hidden print:block">
-              <a className="text-sm font-semibold" href={"mailto:diegocoscolla@gmail.com"}>
-                diegocoscolla@gmail.com
-              </a>
-          </div>
+    <div className="ed" lang={language}>
+      <main>
+        <div className="top">
+          <span>{D.location}</span>
+          <TopActions language={language} links={links} />
         </div>
-        <SwitchLanguageButton />
-      </div>
-      <Section title={DATA.about.title}>
-        <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">{DATA.about.content}</p>
-      </Section>
-      <Section title={DATA.work_experience.title}>
-        {DATA.work_experience.items.map((experience, index) => {
-          return (
-            <ExperienceCard
-              key={`${experience.company}-${index}`}
-              company={experience.company}
-              position={experience.position}
-              period={experience.period}
-              bullets={experience.bullets}
-            />
-          );
-        })}
-      </Section>
-      <Section title={DATA.skills.title}>
-        <div className="flex gap-2 flex-wrap">
-          {DATA.skills.items.map((skill, index) => {
-            return (
-              <Badge key={`${skill}-${index}`} variant="outline">
-                {skill}
-              </Badge>
-            );
-          })}
+        <h1>{D.name}</h1>
+        <div className="role">{D.position}</div>
+        <p className="sum">{D.summary}</p>
+        <div className="soc np">
+          {links.map((l) => (
+            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
+          ))}
+          <a href={D.cv.href} download>{D.cv.label}</a>
         </div>
-      </Section>
-      <Section title={DATA.languages.title}>
-        <ul className="text-gray-700 text-xs sm:text-sm list-disc pl-4">
-          {DATA.languages.items.map((l) => <li key={l}>{l}</li>)}
-        </ul>
-      </Section>
-      <Section title={DATA.education.title}>
-        {DATA.education.items.map((study, index) => {
-          return (
-            <StudyCard
-              key={`${study.institution}-${index}`}
-              institution={study.institution}
-              description={study.description}
-              period={study.period}
-            />
-          );
-        })}
-      </Section>
-      <div className="sm:block hidden"><CommandMenu language={language as "en" | "es"} /></div>
-    </main>
+        <p className="print-only">diegocoscolla@gmail.com · linkedin.com/in/diego-cos · github.com/dcos96038 · {SITE_URL.replace("https://", "")}</p>
+
+        <h2><span>{n(1)}</span>{D.about.title}</h2>
+        <p>{D.about.content}</p>
+
+        <h2><span>{n(2)}</span>{D.work_experience.title}</h2>
+        {D.work_experience.items.map((j) => (
+          <div className="job" key={j.company}>
+            <div className="p">{j.period}</div>
+            <div>
+              <h3>{j.company}</h3>
+              <em>{j.position}</em>
+              <ul>{j.bullets.map((b, i) => <li key={i}>{b}</li>)}</ul>
+            </div>
+          </div>
+        ))}
+
+        <h2><span>{n(3)}</span>{D.skills.title}</h2>
+        <div className="sk">{D.skills.items.join(" · ")}</div>
+
+        <h2><span>{n(4)}</span>{D.languages.title}</h2>
+        <p>{D.languages.items.join(" · ")}</p>
+
+        <h2><span>{n(5)}</span>{D.education.title}</h2>
+        {D.education.items.map((e) => (
+          <div className="job" key={e.institution}>
+            <div className="p">{e.period}</div>
+            <div><h3>{e.institution}</h3><p>{e.description}</p></div>
+          </div>
+        ))}
+      </main>
+    </div>
   );
 }
