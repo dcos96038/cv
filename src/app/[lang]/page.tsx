@@ -1,33 +1,39 @@
 import { TopActions } from "@/components/kbar";
 import { RESUME_DATA, SITE_URL } from "@/data/resume-data";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { LANGS, OG_LOCALE, isLang, langPath, langUrl, type Lang } from "@/lib/i18n";
 
-type Props = { searchParams: Promise<{ language?: string }> };
-
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const { language } = await searchParams;
-  const lang = language === "es" ? "es" : "en";
-  const D = RESUME_DATA[lang];
+export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
+  const { lang } = await params;
+  const language: Lang = isLang(lang) ? lang : "en";
+  const D = RESUME_DATA[language];
+  const title = `${D.name} | ${D.position}`;
   return {
-    title: `${D.name} | ${D.position}`,
+    title,
     description: D.summary,
-    alternates: { canonical: "/", languages: { en: "/", es: "/?language=es" } },
+    alternates: {
+      canonical: langPath(language),
+      languages: { en: "/", es: "/es", "x-default": "/" },
+    },
     openGraph: {
-      title: `${D.name} | ${D.position}`,
+      title,
       description: D.summary,
-      url: lang === "es" ? `${SITE_URL}/?language=es` : SITE_URL,
+      url: langUrl(language),
       siteName: D.name,
-      locale: lang === "es" ? "es_AR" : "en_US",
+      locale: OG_LOCALE[language],
+      alternateLocale: LANGS.filter((l) => l !== language).map((l) => OG_LOCALE[l]),
       type: "profile",
+      firstName: "Diego",
+      lastName: "Coscolla",
       images: [{ url: "/profile-picture.jpg", alt: D.name }],
     },
-    twitter: { card: "summary", title: `${D.name} | ${D.position}`, description: D.summary, images: ["/profile-picture.jpg"] },
+    twitter: { card: "summary", creator: "@diego_cos96", title, description: D.summary, images: ["/profile-picture.jpg"] },
   };
 }
 
-export default async function Home({ searchParams }: Props) {
-  const { language: raw } = await searchParams;
-  const language = raw === "es" ? "es" : "en";
+export default async function Home({ params }: PageProps<"/[lang]">) {
+  const { lang } = await params;
+  const language: Lang = isLang(lang) ? lang : "en";
   const D = RESUME_DATA[language];
   const links = [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/diego-cos/" },
@@ -35,10 +41,24 @@ export default async function Home({ searchParams }: Props) {
     { label: "X", href: "https://twitter.com/diego_cos96" },
     { label: "Email", href: "mailto:diegocoscolla@gmail.com" },
   ];
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: D.name,
+    jobTitle: D.position,
+    description: D.summary,
+    url: langUrl(language),
+    image: `${SITE_URL}/profile-picture.jpg`,
+    email: "mailto:diegocoscolla@gmail.com",
+    address: { "@type": "PostalAddress", addressLocality: "Tucumán", addressCountry: "AR" },
+    sameAs: links.filter((l) => l.href.startsWith("http")).map((l) => l.href),
+    knowsLanguage: ["es", "en"],
+  };
   const n = (i: number) => String(i).padStart(2, "0");
 
   return (
-    <div className="ed" lang={language}>
+    <div className="ed">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <main>
         <div className="top">
           <span>{D.location}</span>
@@ -49,7 +69,7 @@ export default async function Home({ searchParams }: Props) {
         <p className="sum">{D.summary}</p>
         <div className="soc np">
           {links.map((l) => (
-            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer">{l.label}</a>
+            <a key={l.label} href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}>{l.label}</a>
           ))}
           <a href={D.cv.href} download>{D.cv.label}</a>
         </div>

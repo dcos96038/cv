@@ -1,26 +1,27 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { langPath, type Lang } from "@/lib/i18n";
+import type { PaletteItem } from "./kbar-palette";
 
-type Lang = "en" | "es";
+// The palette is only needed after Cmd/Ctrl+K or a click, so keep it out of the initial bundle.
+const KbarPalette = dynamic(() => import("./kbar-palette"), { ssr: false });
+
 type Link = { label: string; href: string };
 
 const UI = {
-  en: { cmd: "Type a command or search…", print: "Print", actions: "Actions", links: "Links", toggle: "Switch to Spanish", other: "ES" },
-  es: { cmd: "Escribí un comando o buscá…", print: "Imprimir", actions: "Acciones", links: "Enlaces", toggle: "Cambiar a inglés", other: "EN" },
+  en: { cmd: "Type a command or search…", print: "Print", actions: "Actions", links: "Links", toggle: "Switch to Spanish", other: "ES", menu: "Open command menu", otherName: "Español" },
+  es: { cmd: "Escribí un comando o buscá…", print: "Imprimir", actions: "Acciones", links: "Enlaces", toggle: "Cambiar a inglés", other: "EN", menu: "Abrir menú de comandos", otherName: "English" },
 };
 
 export const TopActions = ({ language, links }: { language: Lang; links: Link[] }) => {
   const [open, setOpen] = useState(false);
-  const [q, setQ] = useState("");
   const router = useRouter();
-  const pathname = usePathname();
   const u = UI[language];
-
-  const toggleLang = useCallback(() => {
-    router.push(language === "en" ? `${pathname}?language=es` : pathname);
-  }, [language, pathname, router]);
+  const other: Lang = language === "en" ? "es" : "en";
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -34,38 +35,22 @@ export const TopActions = ({ language, links }: { language: Lang; links: Link[] 
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const items = useMemo(
+  const items = useMemo<PaletteItem[]>(
     () => [
       { group: u.actions, label: u.print, run: () => setTimeout(() => window.print(), 150) },
-      { group: u.actions, label: u.toggle, run: toggleLang },
+      { group: u.actions, label: u.toggle, run: () => router.push(langPath(other)) },
       ...links.map((l) => ({ group: u.links, label: l.label, run: () => window.open(l.href, "_blank") })),
     ],
-    [u, links, toggleLang]
+    [u, links, router, other]
   );
-  const filtered = items.filter((i) => i.label.toLowerCase().includes(q.toLowerCase()));
 
   return (
     <>
       <span className="np">
-        <button type="button" onClick={() => setOpen(true)} aria-label="Command menu">⌘K</button>
-        <button type="button" onClick={toggleLang}>{u.other}</button>
+        <button type="button" onClick={() => setOpen(true)} aria-label={u.menu} aria-haspopup="dialog" aria-keyshortcuts="Meta+K Control+K">⌘K</button>
+        <Link href={langPath(other)} hrefLang={other} lang={other} aria-label={u.otherName} className="lb">{u.other}</Link>
       </span>
-      {open && (
-        <div id="k" onClick={(e) => e.target === e.currentTarget && setOpen(false)}>
-          <div className="kp" role="dialog" aria-modal="true">
-            <input autoFocus placeholder={u.cmd} value={q} onChange={(e) => setQ(e.target.value)}
-              onKeyDown={(e) => { if (e.key === "Enter" && filtered[0]) { setOpen(false); filtered[0].run(); } }} />
-            <ul>
-              {filtered.map((i, idx) => (
-                <li key={i.label}>
-                  {(idx === 0 || filtered[idx - 1].group !== i.group) && <div className="kg">{i.group}</div>}
-                  <div className={`ki${idx === 0 ? " sel" : ""}`} onClick={() => { setOpen(false); i.run(); }}>{i.label}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+      {open && <KbarPalette items={items} placeholder={u.cmd} onClose={() => setOpen(false)} />}
     </>
   );
 };
