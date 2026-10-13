@@ -14,12 +14,12 @@ export const RESUME_DATA = {
     location: "Tucumán, Argentina · Remote (UTC-3)",
     position: "Full-Stack Software Engineer",
     summary:
-      "Full-stack software engineer working with TypeScript, React/Next.js, Node.js/NestJS and PostgreSQL. Product features end to end, including LLM features.",
+      "Full-stack software engineer building product features end to end with TypeScript, React, Next.js, Node.js, NestJS and PostgreSQL, including LLM integrations.",
     cv: { label: "Download CV (PDF)", href: "/Diego_Coscolla_CV.pdf" },
     about: {
       title: "About",
       content:
-        "Full-stack engineer with 4+ years of professional experience in TypeScript, React and Node.js. I make frontend architecture decisions and build product features end to end, from data and backend services to the UI. I have built browser extensions, including one with LLM features, and introduced Spec-Driven Development so AI-assisted work starts from specs and acceptance criteria. Strongest on the frontend, comfortable with Node.js, NestJS, PostgreSQL and Python.",
+        "Full-stack software engineer with 4+ years of professional experience in TypeScript, React and Node.js. I build product features end to end: data modelling, APIs and backend services, and the UI on top. My strongest side is the frontend, where I have made architecture decisions for large business applications. On the backend I work with Node.js, NestJS, PostgreSQL and Python. I also build LLM integrations and use AI-assisted development day to day, starting from specs and acceptance criteria (Spec-Driven Development) so the output stays reviewable.",
     },
     work_experience: {
       title: "Work Experience",
@@ -29,11 +29,11 @@ export const RESUME_DATA = {
           position: "Software Engineer",
           period: "Sep 2024 - Present",
           bullets: [
-            "Made the frontend architecture decisions for an ERP: application structure, a reusable component system and complex business flows in React, Next.js and TypeScript.",
+            "Made the frontend architecture decisions for an ERP: application structure, a reusable component system and complex business flows, built with React, Next.js and TypeScript.",
             "Built an analytics platform for livestock-feeding decisions end to end: data processing, business rules, backend services and KPI dashboards.",
             "Designed and integrated APIs and backend services with Node.js, NestJS, PostgreSQL and Redis (relational modelling, persistence, async jobs).",
             "Co-developed WTM, a browser extension with LLM features that captures relevant browsing context, stores it and lets users query it with language models.",
-            "Researched models for daily development, helped set up an agent-based engineering workflow and taught the team Spec-Driven Development (SDD).",
+            "Researched models for daily development, helped set up an agent-based engineering workflow and introduced Spec-Driven Development (SDD) to the team, so specs and acceptance criteria guide AI-assisted implementation.",
             "Master Enrichment: Microsoft Fabric pipelines and notebooks to consolidate and enrich a debtor master database, integrated with Azure SQL and SharePoint via Microsoft Graph.",
             "BISA: internal stock transfers and orders module between warehouses. Python API (Alembic, pytest), TypeScript frontend (Vitest) and async ERP integration with stock reservations and hexagonal design.",
           ],
@@ -52,7 +52,7 @@ export const RESUME_DATA = {
           position: "Frontend Engineer",
           period: "Jan 2023 - Jul 2023",
           bullets: [
-            "Built solo a Chrome lead-capture extension on top of Nosis APIs, still in production.",
+            "Built a Chrome lead-capture extension on my own on top of Nosis APIs; it is still in production.",
             "Migrated React apps from JavaScript to TypeScript.",
           ],
         },
@@ -75,9 +75,16 @@ export const RESUME_DATA = {
     skills: {
       title: "Skills",
       items: [
-        "TypeScript", "React", "Next.js", "Node.js", "NestJS", "PostgreSQL", "Redis",
-        "Python", "Tailwind CSS", "Docker", "Azure SQL", "Microsoft Fabric",
-        "React Native", "GraphQL", "REST APIs", "LLM features", "Spec-Driven Development",
+        // Languages
+        "TypeScript", "JavaScript", "Python", "SQL",
+        // Frontend
+        "React", "Next.js", "React Native", "Expo", "Tailwind CSS",
+        // Backend & data
+        "Node.js", "NestJS", "REST APIs", "GraphQL", "PostgreSQL", "Redis", "Azure SQL", "Microsoft Fabric",
+        // AI
+        "LLM integrations", "AI-assisted development", "Agent-based workflows", "Spec-Driven Development (SDD)",
+        // Tooling
+        "Docker", "CI/CD", "Git", "Monorepos (Turborepo)",
       ],
     },
     languages: {
@@ -100,12 +107,12 @@ export const RESUME_DATA = {
     location: "Tucumán, Argentina · Remoto (UTC-3)",
     position: "Desarrollador Full-Stack",
     summary:
-      "Desarrollador full-stack con TypeScript, React/Next.js, Node.js/NestJS y PostgreSQL. Funcionalidades de producto de punta a punta, incluidas con LLM.",
+      "Desarrollador full-stack. Construyo funcionalidades de producto de punta a punta con TypeScript, React, Next.js, Node.js, NestJS y PostgreSQL, incluidas integraciones con LLMs.",
     cv: { label: "Descargar CV (PDF)", href: "/Diego_Coscolla_CV_ES.pdf" },
     about: {
       title: "Sobre mí",
       content:
-        "Desarrollador full-stack con más de 4 años en TypeScript, React y Node.js. Tomo decisiones de arquitectura frontend y construyo funcionalidades de producto de punta a punta, desde los datos y los servicios backend hasta la interfaz. Desarrollé extensiones de navegador, incluida una con funcionalidades de LLM, e introduje Spec-Driven Development para que el trabajo asistido por IA parta de specs y criterios de aceptación. Más fuerte en frontend; cómodo con Node.js, NestJS, PostgreSQL y Python.",
+        "Desarrollador full-stack con más de 4 años de experiencia profesional en TypeScript, React y Node.js. Construyo funcionalidades de producto de punta a punta: modelado de datos, APIs y servicios backend, y la interfaz. Mi fuerte es el frontend, donde tomé decisiones de arquitectura en aplicaciones de negocio grandes. En backend trabajo con Node.js, NestJS, PostgreSQL y Python. También desarrollo integraciones con LLMs y uso desarrollo asistido por IA en el día a día, partiendo de specs y criterios de aceptación (Spec-Driven Development) para que el resultado se pueda revisar.",
     },
     work_experience: {
       title: "Experiencia",
@@ -119,7 +126,7 @@ export const RESUME_DATA = {
             "Plataforma de analítica de punta a punta para decisiones de alimentación de ganado: procesamiento de datos, reglas de negocio, servicios backend y dashboards de KPIs.",
             "Diseño e integración de APIs y servicios backend con Node.js, NestJS, PostgreSQL y Redis (modelado relacional, persistencia, jobs asincrónicos).",
             "Co-desarrollé WTM, una extensión de navegador con funcionalidades de LLM: captura contexto relevante de la navegación, lo guarda y permite consultarlo con modelos de lenguaje.",
-            "Investigué modelos para el desarrollo diario, ayudé a armar un flujo de trabajo basado en agentes y le enseñé al equipo Spec-Driven Development (SDD).",
+            "Investigué modelos para el desarrollo diario, ayudé a armar un flujo de trabajo basado en agentes e introduje Spec-Driven Development (SDD) en el equipo, para que las specs y los criterios de aceptación guíen la implementación asistida por IA.",
             "Master Enrichment: pipelines y notebooks en Microsoft Fabric para consolidar y enriquecer una base maestra de deudores, con integración a Azure SQL y SharePoint vía Microsoft Graph.",
             "BISA: módulo de traslados y pedidos internos de stock entre depósitos. API en Python (Alembic, pytest), frontend en TypeScript (Vitest) e integración asíncrona con el ERP, con reservas de stock y diseño hexagonal.",
           ],
@@ -138,7 +145,7 @@ export const RESUME_DATA = {
           position: "Frontend Engineer",
           period: "Ene 2023 - Jul 2023",
           bullets: [
-            "Construí solo una extensión de Chrome de captación de leads sobre las APIs de Nosis, todavía en producción.",
+            "Construí por mi cuenta una extensión de Chrome de captación de leads sobre las APIs de Nosis, que sigue en producción.",
             "Migré apps React de JavaScript a TypeScript.",
           ],
         },
@@ -161,9 +168,16 @@ export const RESUME_DATA = {
     skills: {
       title: "Habilidades",
       items: [
-        "TypeScript", "React", "Next.js", "Node.js", "NestJS", "PostgreSQL", "Redis",
-        "Python", "Tailwind CSS", "Docker", "Azure SQL", "Microsoft Fabric",
-        "React Native", "GraphQL", "REST APIs", "Funcionalidades con LLM", "Spec-Driven Development",
+        // Lenguajes
+        "TypeScript", "JavaScript", "Python", "SQL",
+        // Frontend
+        "React", "Next.js", "React Native", "Expo", "Tailwind CSS",
+        // Backend y datos
+        "Node.js", "NestJS", "REST APIs", "GraphQL", "PostgreSQL", "Redis", "Azure SQL", "Microsoft Fabric",
+        // IA
+        "Integraciones con LLMs", "Desarrollo asistido por IA", "Flujos con agentes", "Spec-Driven Development (SDD)",
+        // Herramientas
+        "Docker", "CI/CD", "Git", "Monorepos (Turborepo)",
       ],
     },
     languages: {
