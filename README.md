@@ -2,7 +2,7 @@
 
 Personal CV site, in English and Spanish.
 
-**Live:** https://diegocoscolla.dev
+**Live:** https://cv.diegocoscolla.dev
 
 ## Stack
 
