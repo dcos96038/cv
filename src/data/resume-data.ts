@@ -1,4 +1,4 @@
-export const SITE_URL = "https://diegocoscolla.dev";
+export const SITE_URL = "https://cv.diegocoscolla.dev";
 
 export type Experience = {
   company: string;
