@@ -15,7 +15,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center gap-6">
+    <main className="flex h-dvh flex-col items-center justify-center gap-6">
       <div className="flex flex-col">
         <h2 className="text-center font-medium text-lg">
           Something went wrong!

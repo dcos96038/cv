@@ -27,7 +27,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   if (!isLang(lang)) notFound();
   return (
     <html lang={lang}>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable, fontSerif.variable)}>
+      <body className={cn("min-h-dvh bg-background font-sans antialiased", fontSans.variable, fontSerif.variable)}>
         {children}
       </body>
     </html>

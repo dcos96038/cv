@@ -49,7 +49,6 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
     sameAs: links.filter((l) => l.href.startsWith("http")).map((l) => l.href),
     knowsLanguage: ["es", "en"],
   };
-  const n = (i: number) => String(i).padStart(2, "0");
 
   return (
     <div className="ed">
@@ -70,10 +69,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
         </nav>
         <p className="print-only">diegocoscolla@gmail.com · linkedin.com/in/diego-cos · github.com/dcos96038 · {SITE_URL.replace("https://", "")}</p>
 
-        <h2><span>{n(1)}</span>{D.about.title}</h2>
+        <h2>{D.about.title}</h2>
         <p>{D.about.content}</p>
 
-        <h2><span>{n(2)}</span>{D.work_experience.title}</h2>
+        <h2>{D.work_experience.title}</h2>
         {D.work_experience.items.map((j) => (
           <div className="job" key={j.company}>
             <div className="p">{j.period}</div>
@@ -85,13 +84,13 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           </div>
         ))}
 
-        <h2><span>{n(3)}</span>{D.skills.title}</h2>
+        <h2>{D.skills.title}</h2>
         <div className="sk">{D.skills.items.join(" · ")}</div>
 
-        <h2><span>{n(4)}</span>{D.languages.title}</h2>
+        <h2>{D.languages.title}</h2>
         <p>{D.languages.items.join(" · ")}</p>
 
-        <h2><span>{n(5)}</span>{D.education.title}</h2>
+        <h2>{D.education.title}</h2>
         {D.education.items.map((e) => (
           <div className="job" key={e.institution}>
             <div className="p">{e.period}</div>
